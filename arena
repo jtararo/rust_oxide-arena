@@ -85,7 +85,7 @@ function PLUGIN:Coord( netuser, cmd, args )
     rust.SendChatToUser( netuser, "Current Position: {x: " .. coords.x .. ", y: " .. coords.y .. ", z: " .. coords.z .. "}")
 end
 
-function PLUGIN:ahelp( netuser )
+function PLUGIN:ahelp( netuser ) -- Extended the help
 	rust.SendChatToUser( netuser, "Use /arena to TP to the the roof of the Arena" )
 	rust.SendChatToUser( netuser, "/arenat1 : Bottom Floor of Arena (Team 1)" )
 	rust.SendChatToUser( netuser, "/arenat2 : Rooftop Corner of Arena (Team 2)" )
