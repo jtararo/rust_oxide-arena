@@ -89,6 +89,7 @@ function PLUGIN:ahelp( netuser )
 	rust.SendChatToUser( netuser, "Use /arena to TP to the the roof of the Arena" )
 	rust.SendChatToUser( netuser, "/arenat1 : Bottom Floor of Arena (Team 1)" )
 	rust.SendChatToUser( netuser, "/arenat2 : Rooftop Corner of Arena (Team 2)" )
+	rust.SendChatToUSer( netuser, "testing..." )
     if (netuser:CanAdmin()) then
         rust.SendChatToUser( netuser, "Use /arenaon and /arenaoff to toggle the Arena Open or Closed" )
     end
