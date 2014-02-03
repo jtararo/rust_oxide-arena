@@ -13,19 +13,21 @@ function PLUGIN:Init()
    self:AddChatCommand( "coord", self.Coord )
    self:AddChatCommand( "ahelp", self.ahelp )
    self.AddChatCommand( "tower", self.tower )
+   self.AddChatCommand( "arenaarm", self.arenaArm )
+
 end
 
-function PLUGIN:tower( netuser, cmd )
-	rust.SendChatToUser( netuser, "Test. Teleport to Tower..." )	
+function PLUGIN:tower( netuser )
+	rust.Notice( netuser, "Test. Teleport to Tower..." )		
 end
 
-function PLUGIN:arenaArm( netuser, cmd )
+function PLUGIN:arenaArm( netuser )
 	if( arenaArmed == "no" ) then
 		self.arenaArmed = "yes"
-		rust:SendChatToUser( netuser, "TEST : Arena Kit Will Be Deployed" )
+		rust.Notice( netuser, "TEST : Arena Kit Will Be Deployed" )
 		else
 		self.arenaArmed = "no"
-		rust:SendChatToUser( netuser, "TEST : Arena Kit Will NOT Be Deployed" )
+		rust.Notice( netuser, "TEST : Arena Kit Will NOT Be Deployed" )
 		end
 end
 
@@ -72,7 +74,7 @@ function PLUGIN:start2( netuser, cmd )
      local coords = netuser.playerClient.lastKnownPosition
 	 rust.Notice( netuser, "Spawning on Rooftop corner" )
      coords.x = 5145.6708984375 --Xcoordinates arena
-     coords.y = 443.2848815918 --Ycoordinates arena
+     coords.y = 445.2848815918 --Ycoordinates arena
      coords.z = -4031.2954101563 --Zcoordinates arena
      rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
    else
@@ -91,7 +93,7 @@ function PLUGIN:arenaPort( netuser, cmd )
 		 local coords = netuser.playerClient.lastKnownPosition
 		 rust.Notice( netuser, "Spawning on Rooftop" )
 		 coords.x = 5150 --Xcoordinates arena
-		 coords.y = 443 --Ycoordinates arena
+		 coords.y = 445 --Ycoordinates arena
 		 coords.z = -4062 --Zcoordinates arena
 		 rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
    else
@@ -115,5 +117,5 @@ function PLUGIN:ahelp( netuser ) -- Extended the help
 end
 
 function PLUGIN:SendHelpText( netuser )
-    --rust.SendChatToUser( netuser, "Use /ahelp to see Arena commands" )
+    rust.SendChatToUser( netuser, "Use /ahelp to see Arena commands" )
 end

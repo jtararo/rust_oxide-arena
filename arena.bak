@@ -4,6 +4,7 @@ PLUGIN.Version = "1.0a"
 
 function PLUGIN:Init()
    self.Arena = "off"
+   self.arenaArmed = "no"
    self:AddChatCommand( "arenaon", self.arenaON )
    self:AddChatCommand( "arenaoff", self.arenaOFF )
    self:AddChatCommand( "arena", self.arenaPort )
@@ -11,6 +12,23 @@ function PLUGIN:Init()
    self:AddChatCommand( "arenat2", self.start2 )
    self:AddChatCommand( "coord", self.Coord )
    self:AddChatCommand( "ahelp", self.ahelp )
+   self.AddChatCommand( "tower", self.tower )
+   self.AddChatCommand( "arenaarm", self.arenaArm )
+
+end
+
+function PLUGIN:tower( netuser, cmd )
+	rust.Notice( netuser, "Test. Teleport to Tower..." )		
+end
+
+function PLUGIN:arenaArm( netuser, cmd )
+	if( arenaArmed == "no" ) then
+		self.arenaArmed = "yes"
+		rust.Notice( netuser, "TEST : Arena Kit Will Be Deployed" )
+		else
+		self.arenaArmed = "no"
+		rust.Notice( netuser, "TEST : Arena Kit Will NOT Be Deployed" )
+		end
 end
 
 function PLUGIN:arenaON( netuser, cmd )
@@ -56,7 +74,7 @@ function PLUGIN:start2( netuser, cmd )
      local coords = netuser.playerClient.lastKnownPosition
 	 rust.Notice( netuser, "Spawning on Rooftop corner" )
      coords.x = 5145.6708984375 --Xcoordinates arena
-     coords.y = 443.2848815918 --Ycoordinates arena
+     coords.y = 445.2848815918 --Ycoordinates arena
      coords.z = -4031.2954101563 --Zcoordinates arena
      rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
    else
@@ -67,13 +85,17 @@ end
 
 -- For Normal Free For All Gameplay - Ground Floor
 function PLUGIN:arenaPort( netuser, cmd )
-   if (self.Arena == "on") then
-     local coords = netuser.playerClient.lastKnownPosition
-	 rust.Notice( netuser, "Spawning on Rooftop" )
-     coords.x = 5150 --Xcoordinates arena
-     coords.y = 443 --Ycoordinates arena
-     coords.z = -4062 --Zcoordinates arena
-     rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+	if (self.Arena == "on") then
+		if ( self.arenaArmed == "yes" ) then
+			rust.Notice( netuser, "Arena Kit Deployed. Good Luck!" )
+			end
+   
+		 local coords = netuser.playerClient.lastKnownPosition
+		 rust.Notice( netuser, "Spawning on Rooftop" )
+		 coords.x = 5150 --Xcoordinates arena
+		 coords.y = 445 --Ycoordinates arena
+		 coords.z = -4062 --Zcoordinates arena
+		 rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
    else
      rust.Notice(netuser, "Arena is closed!")
    end
@@ -95,5 +117,5 @@ function PLUGIN:ahelp( netuser ) -- Extended the help
 end
 
 function PLUGIN:SendHelpText( netuser )
-    --rust.SendChatToUser( netuser, "Use /ahelp to see Arena commands" )
+    rust.SendChatToUser( netuser, "Use /ahelp to see Arena commands" )
 end
