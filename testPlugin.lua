@@ -37,13 +37,19 @@ rust.SendChatToUser( netuser, "/status1 Command Called" )
 end ]]
 function PLUGIN:cmdStatus1( netuser, cmd, args )
 user = netuser.DisplayName
-if ( user == "3lindNinja" ) then
-	rust.SendChatToUser( netuser, "/status1 Command Called" )
-		if self.arenaArmed == "no" then
-			rust.SendChatToUser( netuser, "Arena is Not Armed!" )
+	if ( user == "3lindNinja" ) then
+		if ( args[1] == nil ) then
+		rust.SendChatToUser( netuser, "/status1 Command Called. No Arguments." )
+			if self.arenaArmed == "no" then
+				rust.SendChatToUser( netuser, "Arena is Not Armed!" )
+			else
+				rust.SendChatToUser( netuser, "Arena is Armed" )
+			end
 		else
-			rust.SendChatToUser( netuser, "Arena is Armed" )
+			rust.SendChatToUser ( netuser, "Argument Found: " .. args[1] )
 		end
+			
+			
 	else
 		rust.SendChatToUser( netuser, "Wrong USer!" )
 	end

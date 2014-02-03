@@ -7,7 +7,7 @@ PLUGIN.Version = "1.0"
 function PLUGIN:Init()
 	self.arenaArmed = "no";
     self:AddChatCommand("status", self.cmdStatus);
-	self.AddChatCommand("status1", self.cmdStatus1);
+	self:AddChatCommand("status1", self.cmdStatus1);
 	
 end
 
