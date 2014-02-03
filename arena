@@ -12,8 +12,8 @@ function PLUGIN:Init()
    self:AddChatCommand( "arenat2", self.start2 )
    self:AddChatCommand( "coord", self.Coord )
    self:AddChatCommand( "ahelp", self.ahelp )
-   self.AddChatCommand( "tower", self.tower )
-   self.AddChatCommand( "arenaarm", self.arenaArm )
+   self:AddChatCommand( "tower", self.tower )
+   self:AddChatCommand( "arenaarm", self.arenaArm )
 
 end
 
@@ -24,7 +24,7 @@ end
 function PLUGIN:arenaArm( netuser )
 	if( arenaArmed == "no" ) then
 		self.arenaArmed = "yes"
-		rust.Notice( netuser, "TEST : Arena Kit Will Be Deployed" )
+		rust.Notice( netuser, "TEST : Arena Kit Will Be Deployed" )		
 		else
 		self.arenaArmed = "no"
 		rust.Notice( netuser, "TEST : Arena Kit Will NOT Be Deployed" )
