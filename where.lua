@@ -25,7 +25,7 @@ function PLUGIN:cmdWhere(netuser, cmd, args)
     if (not args[1]) then
         rust.SendChatToUser( netuser, "Current location: " .. self:findNearestPoint(netuser) .. " " .. self:getUserLocation(netuser) );
         rust.SendChatToUser( netuser, "You are currently facing " .. self:getUserDirection(netuser) );
-        -- rust.SendChatToUser( netuser, "You can see yourself on the map at http://rustmap.net/" ); -- Dont need this.
+        rust.SendChatToUser( netuser, "You can see yourself on the map at http://rustmap.net/" );
         return
     end
 
