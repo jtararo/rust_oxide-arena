@@ -85,26 +85,66 @@ end
 
 -- For Normal Free For All Gameplay - Ground Floor
 function PLUGIN:arenaPort( netuser, cmd, args )
+math.randomseed( os.time() )
 	if (self.Arena == "on") then
-		
-		-- Check for an argument
-		if( args[1] == "1") then
-			rust.Notice(netuser, "Arena: " .. args[1])
-			else
-			if( args[1] == "2" then
-				rust.Notice(netuser, "Arena: " .. args[1])
+	local coords = netuser.playerClient.lastKnownPosition
+		if(args[1] == nil ) then						
+			rust.Notice( netuser, "Spawning on Rooftop" )
+			coords.x = 5150 --Xcoordinates arena
+			coords.y = 445 --Ycoordinates arena
+			coords.z = -4062 --Zcoordinates arena
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+		else
+			-- Main Arena Bottom Floor
+			if((args[1] == "floating") and (args[2] == "1")) then
+				rust.Notice( netuser, "Spawning on Bottom Floor" )
+				coords.x = 5156.21972656 --Xcoordinates arena
+				coords.y = 423.2848815918 --Ycoordinates arena
+				coords.z = -4084.0363769531 --Zcoordinates arena
+				rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)			
 				else
-   
-		 local coords = netuser.playerClient.lastKnownPosition
-		 rust.Notice( netuser, "Spawning on Rooftop" )
-		 coords.x = 5150 --Xcoordinates arena
-		 coords.y = 445 --Ycoordinates arena
-		 coords.z = -4062 --Zcoordinates arena
-		 rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
-		 end
-   else
-     rust.Notice(netuser, "Arena is closed!")
-   end
+				-- Take user to new Arena
+				if( (args[1] == "opentop") and (args[2] == "1") ) then
+				rust.Notice( netuser, "OpenTop: PAD 1" )
+				coords.x = 5716
+				coords.y = 333
+				coords.z = -5182
+				rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+				else
+					if( ( args[1] == "opentop" ) and ( args[2] == "2" ) ) then
+					rust.Notice( netuser, "OpenTop: PAD 2" )
+					coords.x = 5728
+					coords.y = 333
+					coords.z = -5140
+					rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+					else
+						if( ( args[1] == "opentop" ) and ( args[2] == "3" ) ) then
+						rust.Notice( netuser, "OpenTop: PAD 3" )
+						coords.x = 5681
+						coords.y = 333
+						coords.z = -5126
+						rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+						else
+							if( ( args[1] == "opentop" ) and ( args[2] == "4" ) ) then
+							rust.Notice( netuser, "OpenTop: PAD 4" )
+							coords.x = 5670
+							coords.y = 333
+							coords.z = -5171
+							rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+							else
+								if( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
+								randomSpawnpoint = math.random(1,4)
+								rust.Notice( netuser, "Spawning on PAD " .. randomSpawnpoint )
+								end
+							end
+						end						
+					end							
+				end
+			end
+		end
+	else
+	rust.Notice(netuser, "Arena is closed!")
+	end
    return
 end
 
