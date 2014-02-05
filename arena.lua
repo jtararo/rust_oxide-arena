@@ -107,44 +107,37 @@ function PLUGIN:arenaPort( netuser, cmd, args )
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)	
 		end
 		if( (args[1] == "opentop") and (args[2] == "1") ) then -- Take user to new Arena
-		print("arena: /arena opentop 1")
 			rust.Notice( netuser, "OpenTop: PAD 1" )
 			coords.x = 5716
 			coords.y = 333
 			coords.z = -5182
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 		elseif( ( args[1] == "opentop" ) and ( args[2] == "2" ) ) then
-		print("arena: /arena opentop 2")
 			rust.Notice( netuser, "OpenTop: PAD 2" )
 			coords.x = 5728
 			coords.y = 333
 			coords.z = -5140
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 		elseif( ( args[1] == "opentop" ) and ( args[2] == "3" ) ) then
-		print("arena: /arena opentop 3")
 			rust.Notice( netuser, "OpenTop: PAD 3" )
 			coords.x = 5681
 			coords.y = 333
 			coords.z = -5126
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 		elseif( ( args[1] == "opentop" ) and ( args[2] == "4" ) ) then
-		print("arena: /arena opentop 4")
 			rust.Notice( netuser, "OpenTop: PAD 4" )
 			coords.x = 5670
 			coords.y = 333
 			coords.z = -5171
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 		elseif( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
-		print("arena: /arena opentop")
 			randomSpawnPointNumber = math.random(4)
-			print("..random number generated: " .. randomSpawnPointNumber)
 			x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
-			print( "PAD: " .. randomSpawnPointNumber .. " x: " .. x )
-			spx = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
-			spy = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
-			spz = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
+			coords.x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
+			coords.y = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
+			coords.z = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
 			rust.Notice( netuser, "Spawning at PAD: " ..  randomSpawnPointNumber )
-			print("x: " .. spx .. " y:" .. spy .. " z:" .. spz )
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 
 		end	
 
