@@ -141,8 +141,11 @@ function PLUGIN:arenaPort( netuser, cmd, args )
 			print("..random number generated: " .. randomSpawnPointNumber)
 			x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
 			print( "PAD: " .. randomSpawnPointNumber .. " x: " .. x )
-			randomSpawnPointx = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
-			rust.Notice( netuser, "randomSpawnPoint.x: " .. randomSpawnPointx )
+			spx = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
+			spy = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
+			spz = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
+			rust.Notice( netuser, "Spawning at PAD: " ..  randomSpawnPointNumber )
+			print("x: " .. spx .. " y:" .. spy .. " z:" .. spz )
 
 		end	
 

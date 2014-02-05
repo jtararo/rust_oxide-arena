@@ -136,7 +136,6 @@ function PLUGIN:arenaPort( netuser, cmd, args )
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 		elseif( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
 		print("arena: /arena opentop")
-			math.randomseed( 56789900565675756747322414354 )
 			randomSpawnPointNumber = math.random(4)
 			print("..random number generated: " .. randomSpawnPointNumber)
 			x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
