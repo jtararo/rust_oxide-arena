@@ -24,7 +24,7 @@ end
 function PLUGIN:cmdWhere(netuser, cmd, args)
     if (not args[1]) then
         rust.SendChatToUser( netuser, "Current location: " .. self:findNearestPoint(netuser) .. " " .. self:getUserLocation(netuser) );
-        rust.SendChatToUser( netuser, "You are currently facing " .. self:getUserDirection(netuser) );
+        --rust.SendChatToUser( netuser, "You are currently facing " .. self:getUserDirection(netuser) );
         rust.SendChatToUser( netuser, "You can see yourself on the map at http://rustmap.net/" );
         return
     end
@@ -45,7 +45,7 @@ function PLUGIN:cmdWhere(netuser, cmd, args)
     end
 
     rust.SendChatToUser( netuser, targetuser.displayName .. "'s current location: " .. self:findNearestPoint(targetuser) .. " " .. self:getUserLocation(targetuser) );
-    rust.SendChatToUser( netuser, "They are currently facing " .. self:getUserDirection(targetuser) );
+    --rust.SendChatToUser( netuser, "They are currently facing " .. self:getUserDirection(targetuser) );
 end
 
 function PLUGIN:compassLetter(dir)
@@ -74,7 +74,7 @@ function PLUGIN:getUserDirection(netuser)
  
         -- Convert unit circle angle to compass angle. 
         -- Known error: char.eyesYaw randomly returns a String value and breaks output
-        local direction = (char.eyesYaw+90)%360
+        --local direction = (char.eyesYaw+90)%360
  
         return self:compassLetter(direction)
 end

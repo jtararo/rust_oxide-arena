@@ -13,21 +13,23 @@ function PLUGIN:Init()
    self:AddChatCommand( "coord", self.Coord )
    self:AddChatCommand( "ahelp", self.ahelp )
    self:AddChatCommand( "tower", self.tower )
-   self:AddChatCommand( "arenaarm", self.arenaArm )
+   
+   -- Load in the co-ordinates for OpenTop (For now it's only OpenTop)
+   self:cmdDataCoordinates()
 
 end
 
 function PLUGIN:tower( netuser )
-	rust.Notice( netuser, "Test. Teleport to Tower..." )		
+	rust.SendChatToUser( netuser, "Loading coordinates..." )		
+	self:cmdDataCoordinates()
+	rust.SendChatToUser( netuser, "Coordinates loaded." )		
 end
 
 function PLUGIN:arenaArm( netuser )
 	if( arenaArmed == "no" ) then
-		self.arenaArmed = "yes"
-		rust.Notice( netuser, "TEST : Arena Kit Will Be Deployed" )		
+		-- Do something here
 		else
-		self.arenaArmed = "no"
-		rust.Notice( netuser, "TEST : Arena Kit Will NOT Be Deployed" )
+		-- Do something here
 		end
 end
 
@@ -85,66 +87,117 @@ end
 
 -- For Normal Free For All Gameplay - Ground Floor
 function PLUGIN:arenaPort( netuser, cmd, args )
+	self.arenaStatusOpenTop = self.data["Arena"]["Status"]["OpenTop"]
+	self.arenaStatusFloating = self.data["Arena"]["Status"]["Floating"]
+	
 	if (self.Arena == "on") then
 	local coords = netuser.playerClient.lastKnownPosition
-		if(args[1] == nil ) then						
+		if(args[1] == nil ) then		
 			rust.Notice( netuser, "Spawning on Rooftop" )
 			coords.x = 5150 --Xcoordinates arena
 			coords.y = 445 --Ycoordinates arena
 			coords.z = -4062 --Zcoordinates arena
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
-		else
-			-- Main Arena Bottom Floor
-			if((args[1] == "floating") and (args[2] == "1")) then
-				rust.Notice( netuser, "Spawning on Bottom Floor" )
-				coords.x = 5156.21972656 --Xcoordinates arena
-				coords.y = 423.2848815918 --Ycoordinates arena
-				coords.z = -4084.0363769531 --Zcoordinates arena
-				rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)			
-				else
-				-- Take user to new Arena
-				if( (args[1] == "opentop") and (args[2] == "1") ) then
-				rust.Notice( netuser, "OpenTop: PAD 1" )
-				coords.x = 5716
-				coords.y = 333
-				coords.z = -5182
-				rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
-				else
-					if( ( args[1] == "opentop" ) and ( args[2] == "2" ) ) then
-					rust.Notice( netuser, "OpenTop: PAD 2" )
-					coords.x = 5728
-					coords.y = 333
-					coords.z = -5140
-					rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
-					else
-						if( ( args[1] == "opentop" ) and ( args[2] == "3" ) ) then
-						rust.Notice( netuser, "OpenTop: PAD 3" )
-						coords.x = 5681
-						coords.y = 333
-						coords.z = -5126
-						rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
-						else
-							if( ( args[1] == "opentop" ) and ( args[2] == "4" ) ) then
-							rust.Notice( netuser, "OpenTop: PAD 4" )
-							coords.x = 5670
-							coords.y = 333
-							coords.z = -5171
-							rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
-							else
-								if( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
-								randomSpawnpoint = math.random(1,4)
-								rust.Notice( netuser, "Spawning on PAD " .. randomSpawnpoint )
-								end
-							end
-						end						
-					end							
-				end
-			end
 		end
+		if((args[1] == "floating") and (args[2] == "1")) then -- Main Arena Bottom Floor
+			rust.Notice( netuser, "Spawning on Bottom Floor" )
+			coords.x = 5156.21972656 
+			coords.y = 424.2848815918
+			coords.z = -4084.0363769531
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)	
+		end
+		if( (args[1] == "opentop") and (args[2] == "1") ) then -- Take user to new Arena
+		print("arena: /arena opentop 1")
+			rust.Notice( netuser, "OpenTop: PAD 1" )
+			coords.x = 5716
+			coords.y = 333
+			coords.z = -5182
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+		elseif( ( args[1] == "opentop" ) and ( args[2] == "2" ) ) then
+		print("arena: /arena opentop 2")
+			rust.Notice( netuser, "OpenTop: PAD 2" )
+			coords.x = 5728
+			coords.y = 333
+			coords.z = -5140
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+		elseif( ( args[1] == "opentop" ) and ( args[2] == "3" ) ) then
+		print("arena: /arena opentop 3")
+			rust.Notice( netuser, "OpenTop: PAD 3" )
+			coords.x = 5681
+			coords.y = 333
+			coords.z = -5126
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+		elseif( ( args[1] == "opentop" ) and ( args[2] == "4" ) ) then
+		print("arena: /arena opentop 4")
+			rust.Notice( netuser, "OpenTop: PAD 4" )
+			coords.x = 5670
+			coords.y = 333
+			coords.z = -5171
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
+		elseif( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
+		print("arena: /arena opentop")
+			math.randomseed( 56789900565675756747322414354 )
+			randomSpawnPointNumber = math.random(4)
+			print("..random number generated: " .. randomSpawnPointNumber)
+			x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
+			print( "PAD: " .. randomSpawnPointNumber .. " x: " .. x )
+			spx = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
+			spy = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
+			spz = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
+			rust.Notice( netuser, "Spawning at PAD: " ..  randomSpawnPointNumber )
+			print("x: " .. spx .. " y:" .. spy .. " z:" .. spz )
+
+		end	
+
 	else
-	rust.Notice(netuser, "Arena is closed!")
+		rust.Notice(netuser, "Arena is closed!")
 	end
    return
+end
+
+function PLUGIN:cmdDataCoordinates()
+	print("arena: cmdDataCoordinates was called.")
+	self.data = {} -- Create an empty table to hold our coords
+	
+	self.data["Arena"] = {}
+	self.data["Arena"]["OpenTop"] = {}
+	self.data["Arena"]["OpenTop"]["Pad"] = {}
+	
+	self.data["Arena"]["Status"] = {}
+	
+	-- Our Coordinates	
+	-- Try with the 'Landing Pads' first
+	-- PAD 1
+	self.data["Arena"]["OpenTop"]["Pad"][1] = {}
+	self.data["Arena"]["OpenTop"]["Pad"][1]["x"] = 5716
+	self.data["Arena"]["OpenTop"]["Pad"][1]["y"] = 336
+	self.data["Arena"]["OpenTop"]["Pad"][1]["z"] = -5182
+	print(".. PAD  1 loaded")
+	-- PAD 2
+	self.data["Arena"]["OpenTop"]["Pad"][2] = {}
+	self.data["Arena"]["OpenTop"]["Pad"][2]["x"] = 5728
+	self.data["Arena"]["OpenTop"]["Pad"][2]["y"] = 336
+	self.data["Arena"]["OpenTop"]["Pad"][2]["z"] = -5140	
+	print(".. PAD  2 loaded")
+	-- PAD 3
+	self.data["Arena"]["OpenTop"]["Pad"][3] = {}
+	print(".. PAD3.1 ..")
+	self.data["Arena"]["OpenTop"]["Pad"][3]["x"] = 5681
+	print(".. PAD3.2 ..")
+	self.data["Arena"]["OpenTop"]["Pad"][3]["y"] = 336
+	print(".. PAD3.2 ..")
+	self.data["Arena"]["OpenTop"]["Pad"][3]["z"] = -5126
+	print(".. PAD  3 loaded")
+	-- PAD 4
+	self.data["Arena"]["OpenTop"]["Pad"][4] = {}
+	self.data["Arena"]["OpenTop"]["Pad"][4]["x"] = 5670
+	self.data["Arena"]["OpenTop"]["Pad"][4]["y"] = 336
+	self.data["Arena"]["OpenTop"]["Pad"][4]["z"] = -5171		
+	print(".. PAD  4 loaded")
+	-- Arena Statuses
+	self.data["Arena"]["Status"]["OpenTop"] = "open"
+	self.data["Arena"]["Status"]["Floating"] = "open"
+	print("Coordinates Loaded...")
 end
 
 function PLUGIN:Coord( netuser, cmd, args )
