@@ -132,7 +132,6 @@ function PLUGIN:arenaPort( netuser, cmd, args )
 			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 		elseif( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
 			randomSpawnPointNumber = math.random(4)
-			x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
 			coords.x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
 			coords.y = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
 			coords.z = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
@@ -148,7 +147,6 @@ function PLUGIN:arenaPort( netuser, cmd, args )
 end
 
 function PLUGIN:cmdDataCoordinates()
-	print("arena: cmdDataCoordinates was called.")
 	self.data = {} -- Create an empty table to hold our coords
 	
 	self.data["Arena"] = {}
@@ -164,32 +162,24 @@ function PLUGIN:cmdDataCoordinates()
 	self.data["Arena"]["OpenTop"]["Pad"][1]["x"] = 5716
 	self.data["Arena"]["OpenTop"]["Pad"][1]["y"] = 336
 	self.data["Arena"]["OpenTop"]["Pad"][1]["z"] = -5182
-	print(".. PAD  1 loaded")
 	-- PAD 2
 	self.data["Arena"]["OpenTop"]["Pad"][2] = {}
 	self.data["Arena"]["OpenTop"]["Pad"][2]["x"] = 5728
 	self.data["Arena"]["OpenTop"]["Pad"][2]["y"] = 336
 	self.data["Arena"]["OpenTop"]["Pad"][2]["z"] = -5140	
-	print(".. PAD  2 loaded")
 	-- PAD 3
 	self.data["Arena"]["OpenTop"]["Pad"][3] = {}
-	print(".. PAD3.1 ..")
 	self.data["Arena"]["OpenTop"]["Pad"][3]["x"] = 5681
-	print(".. PAD3.2 ..")
 	self.data["Arena"]["OpenTop"]["Pad"][3]["y"] = 336
-	print(".. PAD3.2 ..")
 	self.data["Arena"]["OpenTop"]["Pad"][3]["z"] = -5126
-	print(".. PAD  3 loaded")
 	-- PAD 4
 	self.data["Arena"]["OpenTop"]["Pad"][4] = {}
 	self.data["Arena"]["OpenTop"]["Pad"][4]["x"] = 5670
 	self.data["Arena"]["OpenTop"]["Pad"][4]["y"] = 336
 	self.data["Arena"]["OpenTop"]["Pad"][4]["z"] = -5171		
-	print(".. PAD  4 loaded")
 	-- Arena Statuses
 	self.data["Arena"]["Status"]["OpenTop"] = "open"
 	self.data["Arena"]["Status"]["Floating"] = "open"
-	print("Coordinates Loaded...")
 end
 
 function PLUGIN:Coord( netuser, cmd, args )

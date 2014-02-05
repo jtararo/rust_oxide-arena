@@ -133,11 +133,11 @@ function PLUGIN:arenaPort( netuser, cmd, args )
 		elseif( ( args[1] == "opentop" ) and ( args[2] == nil ) ) then
 			randomSpawnPointNumber = math.random(4)
 			x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
-			sp.x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
-			sp.y = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
-			sp.z = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
+			coords.x = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["x"]
+			coords.y = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["y"]
+			coords.z = self.data["Arena"]["OpenTop"]["Pad"][randomSpawnPointNumber]["z"]
 			rust.Notice( netuser, "Spawning at PAD: " ..  randomSpawnPointNumber )
-			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, sp)
+			rust.ServerManagement():TeleportPlayer(netuser.playerClient.netPlayer, coords)
 
 		end	
 
